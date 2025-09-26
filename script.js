@@ -3,22 +3,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const particles = document.querySelectorAll('.particle');
     const container = document.querySelector('.container');
     
-    // Создаем эффект следования курсора
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
     
-    // Отслеживаем движение мыши
     document.addEventListener('mousemove', function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
         
-        // Плавное следование курсора (усиленное)
         targetX = (mouseX - window.innerWidth / 2) * 0.3;
         targetY = (mouseY - window.innerHeight / 2) * 0.3;
         
-        // Применяем эффект к волнам (усиленный)
         waves.forEach((wave, index) => {
             const intensity = (index + 1) * 0.4;
             const waveX = targetX * intensity;
@@ -29,13 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
             wave.style.filter = `blur(0px) brightness(${1 + intensity * 0.5}) saturate(${1 + intensity * 0.3})`;
         });
         
-        // Создаем новые частицы при движении мыши (реже и меньше)
         if (Math.random() > 0.7) {
             createParticle(mouseX, mouseY);
         }
     });
     
-    // Оптимизированное создание частиц лавовой лампы
     function createParticle(x, y) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -43,13 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
         particle.style.top = y + 'px';
         particle.style.position = 'absolute';
         
-        // Уменьшенный размер для частиц при движении мыши
         const size = Math.random() * 8 + 6; // 6-14px вместо 15-30px
         const height = size * (0.8 + Math.random() * 0.4);
         particle.style.width = size + 'px';
         particle.style.height = height + 'px';
         
-        // Оптимизированный градиент
         const colors = ['#ff6b6b', '#feca57', '#4ecdc4', '#45b7d1', '#96ceb4'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         
@@ -59,23 +51,19 @@ document.addEventListener('DOMContentLoaded', function() {
             #4ecdc466 60%, 
             transparent 100%)`;
         
-        // Базовые стили
         particle.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
         particle.style.pointerEvents = 'none';
         particle.style.zIndex = '15';
         particle.style.willChange = 'transform, opacity';
         particle.style.transition = 'transform 2s ease-out, opacity 2s ease-out';
         
-        // Уменьшенное свечение для частиц при движении мыши
         particle.style.boxShadow = `0 0 8px ${randomColor}44, 0 0 16px #feca5722`;
         particle.style.filter = 'blur(0.3px)';
         
-        // CSS анимация (короче для частиц при движении мыши)
         particle.style.animation = 'lavaFloat 4s ease-out forwards';
         
         document.body.appendChild(particle);
         
-        // Удаляем через 4 секунды (быстрее)
         setTimeout(() => {
             if (particle.parentNode) {
                 particle.parentNode.removeChild(particle);
@@ -83,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }
     
-    // Добавляем CSS для анимации частиц
     const style = document.createElement('style');
     style.textContent = `
         @keyframes particleFloat {
@@ -98,22 +85,77 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-    
-    // Эффект при клике (только частицы лавовой лампы)
+   
+    const audio = new Audio('frog.wav');
+    audio.volume = 0.5;
+
     document.addEventListener('click', function(e) {
-        // Создаем эффект слияния частиц при клике
         createMergingEffect(e.clientX, e.clientY);
         
-        // Создаем меньше дополнительных частиц при клике
+        audio.play().catch(error => {
+            console.log('Sound error:', error);
+        });
+        
         // for (let i = 0; i < 2; i++) {
         //     setTimeout(() => {
         //         createLavaParticle(e.clientX + (Math.random() - 0.5) * 100, e.clientY + (Math.random() - 0.5) * 100);
         //     }, i * 300);
         // }
     });
+
+    function copyContractAddress() {
+        const contractAddress = document.getElementById('contract-address');
+        const address = contractAddress.textContent;
+        
+        navigator.clipboard.writeText(address).then(() => {
+            showCopyNotification();
+        }).catch(err => {
+            console.error('Error copying address:', err);
+            const textArea = document.createElement('textarea');
+            textArea.value = address;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showCopyNotification();
+        });
+    }
+
+    function showCopyNotification() {
+        const notification = document.createElement('div');
+        notification.textContent = 'Address copied!';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            z-index: 1000;
+            font-weight: bold;
+            animation: slideIn 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 2000);
+    }
+
+    document.getElementById('contract-address').addEventListener('click', function(e) {
+        e.stopPropagation(); 
+        copyContractAddress();
+    });
     
     
-    // Эффект при наведении на волны (усиленный)
     waves.forEach(wave => {
         wave.addEventListener('mouseenter', function() {
             this.style.filter = 'blur(0px) brightness(3) saturate(2.5)';
@@ -122,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transition = 'all 0.2s ease';
             this.style.zIndex = '20';
             
-            // Создаем меньше дополнительных частиц при наведении
             for (let i = 0; i < 1; i++) {
                 setTimeout(() => {
                     const rect = this.getBoundingClientRect();
@@ -139,29 +180,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Оптимизированная анимация частиц через CSS transitions
     function animateParticles() {
         particles.forEach((particle, index) => {
-            // Случайные параметры для каждой частицы
             const randomX = (Math.random() - 0.5) * 40;
             const randomY = (Math.random() - 0.5) * 60;
             const randomScale = 0.8 + Math.random() * 0.4;
             const randomRotation = Math.random() * 360;
             const randomOpacity = 0.4 + Math.random() * 0.4;
             
-            // Применяем изменения через CSS transitions
             particle.style.transform = `translate(${randomX}px, ${randomY}px) scale(${randomScale}) rotate(${randomRotation}deg)`;
             particle.style.opacity = randomOpacity;
         });
         
-        // Обновляем анимацию каждые 3-5 секунд вместо каждого кадра
         setTimeout(animateParticles, 3000 + Math.random() * 2000);
     }
     
-    // Запускаем оптимизированную анимацию частиц
     animateParticles();
     
-    // Функция для создания эффекта слияния частиц
     function createMergingEffect(x, y) {
         const particleCount = 6 + Math.floor(Math.random() * 5); // Случайное число от 6 до 10
         const particles = [];
@@ -171,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
             particles.push(particle);
         }
         
-        // Анимация слияния
         requestAnimationFrame(() => {
             particles.forEach((particle, index) => {
                 particle.style.transform = 'translate(0, 0) scale(1.5)';
@@ -186,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 particle.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${0.6 + Math.random() * 0.8})`;
                 particle.style.opacity = '1';
                 
-                // Добавляем эффект потухания под конец разлета
                 setTimeout(() => {
                     //particle.style.transition = 'opacity 0.8s ease-out';
                     particle.style.opacity = '0';
@@ -195,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Оптимизированное создание частицы лавовой лампы
     function createLavaParticle(x, y) {
         const particle = document.createElement('div');
         particle.className = 'lava-particle';
@@ -226,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return particle;
     }
     
-    // Эффект параллакса при скролле (если будет контент)
     let scrollY = 0;
     window.addEventListener('scroll', function() {
         scrollY = window.scrollY;
@@ -237,9 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Добавляем звуковые эффекты (опционально)
     function playClickSound() {
-        // Создаем простой звуковой эффект
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
@@ -257,8 +286,6 @@ document.addEventListener('DOMContentLoaded', function() {
         oscillator.stop(audioContext.currentTime + 0.1);
     }
     
-    // Привязываем звук к клику (раскомментируйте если нужен звук)
     // document.addEventListener('click', playClickSound);
     
-    console.log('POV - Proof of Vibes загружен! 🌊✨');
 });
