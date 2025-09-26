@@ -191,73 +191,119 @@ body {
 
 .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background: radial-gradient(circle, rgba(78, 205, 196, 0.8) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: float 6s ease-in-out infinite;
+    width: 20px;
+    height: 30px;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 107, 107, 0.9) 0%, 
+        rgba(254, 202, 87, 0.8) 20%, 
+        rgba(78, 205, 196, 0.7) 40%, 
+        rgba(69, 183, 209, 0.5) 60%, 
+        rgba(150, 206, 180, 0.3) 80%, 
+        transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: lavaFloat 8s ease-in-out infinite;
+    box-shadow: 
+        0 0 30px rgba(255, 107, 107, 0.6),
+        0 0 60px rgba(254, 202, 87, 0.4),
+        inset 0 0 20px rgba(78, 205, 196, 0.3);
+    filter: blur(0.5px);
 }
 
 .particle:nth-child(1) {
-    top: 20%;
-    left: 10%;
+    top: 80%;
+    left: 15%;
     animation-delay: 0s;
-    animation-duration: 8s;
+    animation-duration: 12s;
+    width: 25px;
+    height: 35px;
 }
 
 .particle:nth-child(2) {
-    top: 60%;
-    left: 80%;
-    animation-delay: -2s;
-    animation-duration: 6s;
+    top: 70%;
+    left: 75%;
+    animation-delay: -3s;
+    animation-duration: 10s;
+    width: 18px;
+    height: 28px;
 }
 
 .particle:nth-child(3) {
-    top: 40%;
-    left: 50%;
-    animation-delay: -4s;
-    animation-duration: 7s;
+    top: 85%;
+    left: 45%;
+    animation-delay: -6s;
+    animation-duration: 14s;
+    width: 22px;
+    height: 32px;
 }
 
 .particle:nth-child(4) {
-    top: 80%;
-    left: 20%;
-    animation-delay: -1s;
-    animation-duration: 9s;
+    top: 90%;
+    left: 25%;
+    animation-delay: -2s;
+    animation-duration: 11s;
+    width: 16px;
+    height: 26px;
 }
 
 .particle:nth-child(5) {
-    top: 10%;
-    left: 70%;
-    animation-delay: -3s;
-    animation-duration: 5s;
+    top: 75%;
+    left: 65%;
+    animation-delay: -4s;
+    animation-duration: 13s;
+    width: 20px;
+    height: 30px;
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) translateX(0) scale(1);
+@keyframes lavaFloat {
+    0% {
+        transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+        opacity: 0.6;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+    15% {
+        transform: translateY(-30px) translateX(15px) scale(1.3) rotate(45deg);
+        opacity: 0.8;
+        border-radius: 40% 60% 60% 40% / 70% 50% 50% 70%;
+    }
+    30% {
+        transform: translateY(-60px) translateX(-10px) scale(0.8) rotate(90deg);
+        opacity: 0.4;
+        border-radius: 60% 40% 40% 60% / 50% 70% 70% 50%;
+    }
+    45% {
+        transform: translateY(-40px) translateX(25px) scale(1.5) rotate(135deg);
+        opacity: 0.9;
+        border-radius: 30% 70% 70% 30% / 80% 40% 40% 80%;
+    }
+    60% {
+        transform: translateY(-80px) translateX(5px) scale(1.1) rotate(180deg);
         opacity: 0.7;
-    }
-    25% {
-        transform: translateY(-20px) translateX(10px) scale(1.2);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(-10px) translateX(-5px) scale(0.8);
-        opacity: 0.5;
+        border-radius: 70% 30% 30% 70% / 40% 80% 80% 40%;
     }
     75% {
-        transform: translateY(-30px) translateX(15px) scale(1.1);
-        opacity: 0.9;
+        transform: translateY(-50px) translateX(-20px) scale(0.9) rotate(225deg);
+        opacity: 0.5;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+    90% {
+        transform: translateY(-20px) translateX(30px) scale(1.4) rotate(270deg);
+        opacity: 0.8;
+        border-radius: 45% 55% 55% 45% / 65% 55% 55% 65%;
+    }
+    100% {
+        transform: translateY(0) translateX(0) scale(1) rotate(360deg);
+        opacity: 0.6;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     }
 }
 
 /* Эффекты при наведении курсора */
 .wave:hover {
-    filter: blur(0px) brightness(1.2);
-    box-shadow: 0 0 120px rgba(78, 205, 196, 0.6);
-    transform: translateX(-50%) translateY(-15px) scaleY(1.2);
-    transition: all 0.3s ease;
+    filter: blur(0px) brightness(2.5) saturate(2);
+    box-shadow: 0 0 200px rgba(78, 205, 196, 1), 0 0 300px rgba(69, 183, 209, 0.8);
+    transform: translateX(-50%) translateY(-25px) scaleY(1.5);
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
 /* Адаптивность */

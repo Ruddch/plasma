@@ -14,41 +14,70 @@ document.addEventListener('DOMContentLoaded', function() {
         mouseX = e.clientX;
         mouseY = e.clientY;
         
-        // Плавное следование курсора
-        targetX = (mouseX - window.innerWidth / 2) * 0.1;
-        targetY = (mouseY - window.innerHeight / 2) * 0.1;
+        // Плавное следование курсора (усиленное)
+        targetX = (mouseX - window.innerWidth / 2) * 0.3;
+        targetY = (mouseY - window.innerHeight / 2) * 0.3;
         
-        // Применяем эффект к волнам
+        // Применяем эффект к волнам (усиленный)
         waves.forEach((wave, index) => {
-            const intensity = (index + 1) * 0.2;
+            const intensity = (index + 1) * 0.4;
             const waveX = targetX * intensity;
-            const waveY = targetY * intensity * 0.5;
+            const waveY = targetY * intensity * 0.7;
+            const scale = 1 + intensity * 0.3;
             
-            wave.style.transform = `translateX(calc(-50% + ${waveX}px)) translateY(${waveY}px) scaleY(${1 + intensity * 0.1})`;
+            wave.style.transform = `translateX(calc(-50% + ${waveX}px)) translateY(${waveY}px) scaleY(${scale})`;
+            wave.style.filter = `blur(0px) brightness(${1 + intensity * 0.5}) saturate(${1 + intensity * 0.3})`;
         });
         
-        // Создаем новые частицы при движении мыши
-        if (Math.random() > 0.7) {
+        // Создаем новые частицы при движении мыши (чаще и ярче)
+        if (Math.random() > 0.4) {
             createParticle(mouseX, mouseY);
         }
     });
     
-    // Создание новых частиц
+    // Создание новых частиц в стиле лавовой лампы
     function createParticle(x, y) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = x + 'px';
         particle.style.top = y + 'px';
         particle.style.position = 'absolute';
-        particle.style.width = '6px';
-        particle.style.height = '6px';
-        particle.style.background = 'radial-gradient(circle, rgba(78, 205, 196, 0.9) 0%, transparent 70%)';
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '5';
         
-        // Анимация частицы
-        particle.style.animation = 'particleFloat 2s ease-out forwards';
+        // Случайный размер как в лавовой лампе
+        const size = Math.random() * 15 + 15; // 15-30px
+        const height = size * (0.8 + Math.random() * 0.4); // 0.8-1.2 от ширины
+        particle.style.width = size + 'px';
+        particle.style.height = height + 'px';
+        
+        // Градиент лавовой лампы
+        const colors = [
+            'rgba(255, 107, 107, 0.9)',
+            'rgba(254, 202, 87, 0.8)',
+            'rgba(78, 205, 196, 0.7)',
+            'rgba(69, 183, 209, 0.6)',
+            'rgba(150, 206, 180, 0.5)'
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        particle.style.background = `radial-gradient(ellipse at center, 
+            ${randomColor} 0%, 
+            rgba(254, 202, 87, 0.6) 30%, 
+            rgba(78, 205, 196, 0.4) 60%, 
+            transparent 100%)`;
+        
+        // Форма пузырька лавовой лампы
+        particle.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '15';
+        particle.style.boxShadow = `
+            0 0 20px ${randomColor.replace('0.9', '0.6')},
+            0 0 40px rgba(254, 202, 87, 0.4),
+            inset 0 0 15px rgba(78, 205, 196, 0.3)
+        `;
+        particle.style.filter = 'blur(0.5px)';
+        
+        // Анимация лавовой лампы
+        particle.style.animation = 'lavaFloat 8s ease-in-out forwards';
         
         document.body.appendChild(particle);
         
@@ -57,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (particle.parentNode) {
                 particle.parentNode.removeChild(particle);
             }
-        }, 2000);
+        }, 8000);
     }
     
     // Добавляем CSS для анимации частиц
@@ -76,30 +105,41 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
     
-    // Эффект при клике
+    // Эффект при клике (усиленный)
     document.addEventListener('click', function(e) {
-        // Создаем волновой эффект от клика
+        // Создаем волновой эффект от клика (усиленный)
         const ripple = document.createElement('div');
         ripple.style.position = 'absolute';
         ripple.style.left = e.clientX + 'px';
         ripple.style.top = e.clientY + 'px';
         ripple.style.width = '0px';
         ripple.style.height = '0px';
-        ripple.style.border = '2px solid rgba(78, 205, 196, 0.6)';
+        ripple.style.border = '4px solid rgba(78, 205, 196, 1)';
         ripple.style.borderRadius = '50%';
         ripple.style.transform = 'translate(-50%, -50%)';
         ripple.style.pointerEvents = 'none';
-        ripple.style.zIndex = '15';
-        ripple.style.animation = 'ripple 1s ease-out forwards';
+        ripple.style.zIndex = '20';
+        ripple.style.boxShadow = '0 0 50px rgba(78, 205, 196, 0.8), inset 0 0 50px rgba(69, 183, 209, 0.6)';
+        ripple.style.animation = 'ripple 1.5s ease-out forwards';
         
         document.body.appendChild(ripple);
+        
+        // Создаем эффект слияния частиц при клике
+        createMergingEffect(e.clientX, e.clientY);
+        
+        // Создаем дополнительные частицы лавовой лампы
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                createLavaParticle(e.clientX + (Math.random() - 0.5) * 150, e.clientY + (Math.random() - 0.5) * 150);
+            }, i * 200);
+        }
         
         // Удаляем эффект после анимации
         setTimeout(() => {
             if (ripple.parentNode) {
                 ripple.parentNode.removeChild(ripple);
             }
-        }, 1000);
+        }, 1500);
     });
     
     // Добавляем CSS для эффекта ripple
@@ -110,41 +150,75 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: 0px;
                 height: 0px;
                 opacity: 1;
+                border-width: 4px;
+            }
+            50% {
+                width: 200px;
+                height: 200px;
+                opacity: 0.8;
+                border-width: 6px;
             }
             100% {
-                width: 300px;
-                height: 300px;
+                width: 500px;
+                height: 500px;
                 opacity: 0;
+                border-width: 2px;
             }
         }
     `;
     document.head.appendChild(rippleStyle);
     
-    // Эффект при наведении на волны
+    // Эффект при наведении на волны (усиленный)
     waves.forEach(wave => {
         wave.addEventListener('mouseenter', function() {
-            this.style.filter = 'blur(0px) brightness(1.5) saturate(1.5)';
-            this.style.boxShadow = '0 0 150px rgba(78, 205, 196, 0.8)';
-            this.style.transform = 'translateX(-50%) translateY(-20px) scaleY(1.3)';
-            this.style.transition = 'all 0.3s ease';
+            this.style.filter = 'blur(0px) brightness(3) saturate(2.5)';
+            this.style.boxShadow = '0 0 300px rgba(78, 205, 196, 1), 0 0 500px rgba(69, 183, 209, 0.8), 0 0 700px rgba(150, 206, 180, 0.6)';
+            this.style.transform = 'translateX(-50%) translateY(-30px) scaleY(1.8)';
+            this.style.transition = 'all 0.2s ease';
+            this.style.zIndex = '20';
+            
+            // Создаем дополнительные частицы при наведении
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const rect = this.getBoundingClientRect();
+                    createParticle(rect.left + rect.width/2 + (Math.random() - 0.5) * 200, rect.top + (Math.random() - 0.5) * 100);
+                }, i * 200);
+            }
         });
         
         wave.addEventListener('mouseleave', function() {
             this.style.filter = 'blur(1px) brightness(1) saturate(1)';
             this.style.boxShadow = '0 0 50px rgba(78, 205, 196, 0.3)';
             this.style.transform = 'translateX(-50%) translateY(0) scaleY(1)';
+            this.style.zIndex = '1';
         });
     });
     
-    // Плавная анимация частиц
+    // Плавная анимация частиц в стиле лавовой лампы
     function animateParticles() {
         particles.forEach((particle, index) => {
             const time = Date.now() * 0.001;
-            const x = Math.sin(time + index) * 20;
-            const y = Math.cos(time + index * 0.5) * 15;
-            const scale = 1 + Math.sin(time * 2 + index) * 0.3;
+            const slowTime = time * 0.3; // Медленное движение как в лавовой лампе
             
-            particle.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+            // Плавное движение вверх-вниз
+            const y = Math.sin(slowTime + index * 0.5) * 30;
+            const x = Math.cos(slowTime * 0.7 + index * 0.3) * 15;
+            
+            // Изменение формы (как пузырьки в лавовой лампе)
+            const scale = 1 + Math.sin(slowTime * 1.5 + index) * 0.2;
+            const rotation = (slowTime * 20 + index * 45) % 360;
+            
+            // Изменение прозрачности
+            const opacity = 0.6 + Math.sin(slowTime * 2 + index) * 0.3;
+            
+            particle.style.transform = `translate(${x}px, ${y}px) scale(${scale}) rotate(${rotation}deg)`;
+            particle.style.opacity = opacity;
+            
+            // Изменение формы border-radius для эффекта "пузырька"
+            const borderRadiusVariation = Math.sin(slowTime * 3 + index) * 0.1;
+            const baseRadius = 0.6;
+            const newRadius = baseRadius + borderRadiusVariation;
+            particle.style.borderRadius = `50% 50% 50% 50% / ${(newRadius * 100).toFixed(0)}% ${(newRadius * 100).toFixed(0)}% ${((1-newRadius) * 100).toFixed(0)}% ${((1-newRadius) * 100).toFixed(0)}%`;
         });
         
         requestAnimationFrame(animateParticles);
@@ -152,6 +226,66 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Запускаем анимацию частиц
     animateParticles();
+    
+    // Функция для создания эффекта слияния частиц
+    function createMergingEffect(x, y) {
+        const particle1 = createLavaParticle(x - 20, y);
+        const particle2 = createLavaParticle(x + 20, y);
+        
+        // Анимация слияния
+        setTimeout(() => {
+            particle1.style.transition = 'all 1s ease-in-out';
+            particle2.style.transition = 'all 1s ease-in-out';
+            
+            particle1.style.transform = 'translate(20px, 0) scale(1.5)';
+            particle2.style.transform = 'translate(-20px, 0) scale(1.5)';
+            
+            // Создаем большую частицу в центре
+            setTimeout(() => {
+                const mergedParticle = createLavaParticle(x, y);
+                mergedParticle.style.width = '40px';
+                mergedParticle.style.height = '50px';
+                mergedParticle.style.background = `radial-gradient(ellipse at center, 
+                    rgba(255, 107, 107, 1) 0%, 
+                    rgba(254, 202, 87, 0.9) 20%, 
+                    rgba(78, 205, 196, 0.8) 40%, 
+                    rgba(69, 183, 209, 0.6) 60%, 
+                    transparent 100%)`;
+                
+                // Удаляем исходные частицы
+                if (particle1.parentNode) particle1.parentNode.removeChild(particle1);
+                if (particle2.parentNode) particle2.parentNode.removeChild(particle2);
+            }, 1000);
+        }, 100);
+    }
+    
+    // Создание частицы лавовой лампы (отдельная функция)
+    function createLavaParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.position = 'absolute';
+        particle.style.width = '20px';
+        particle.style.height = '30px';
+        particle.style.background = 'radial-gradient(ellipse at center, rgba(255, 107, 107, 0.9) 0%, rgba(254, 202, 87, 0.8) 30%, rgba(78, 205, 196, 0.6) 60%, transparent 100%)';
+        particle.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '15';
+        particle.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.6), 0 0 40px rgba(254, 202, 87, 0.4)';
+        particle.style.filter = 'blur(0.5px)';
+        particle.style.animation = 'lavaFloat 8s ease-in-out forwards';
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 8000);
+        
+        return particle;
+    }
     
     // Эффект параллакса при скролле (если будет контент)
     let scrollY = 0;
