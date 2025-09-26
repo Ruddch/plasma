@@ -1,0 +1,35 @@
+{
+  "name": "plasma-pov",
+  "version": "1.0.0",
+  "description": "POV - Proof of Vibes мем-токен на блокчейне Plasma с анимированными волнами",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "npx live-server --port=3000 --open=/index.html"
+  },
+  "keywords": [
+    "plasma",
+    "blockchain",
+    "meme-token",
+    "pov",
+    "proof-of-vibes",
+    "waves",
+    "animation",
+    "interactive"
+  ],
+  "author": "POV Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/plasma-pov.git"
+  },
+  "homepage": "https://yourusername.github.io/plasma-pov",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
