@@ -31,11 +31,11 @@ body {
 }
 
 .main-image {
-    width: 120px;
-    height: 120px;
+    width: 300px;
+    height: 300px;
     margin-bottom: 1rem;
     border-radius: 50%;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    /* background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57); */
     background-clip: padding-box;
     padding: 3px;
     box-shadow: 
