@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #16213e 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #0d1b2a 25%, #1a2a3a 50%, #2d4a3a 75%, #1a3a2a 100%);
     min-height: 100vh;
     overflow: hidden;
     position: relative;
@@ -39,9 +39,9 @@ body {
     background-clip: padding-box;
     padding: 3px;
     box-shadow: 
-        0 0 30px rgba(255, 107, 107, 0.4),
-        0 0 60px rgba(78, 205, 196, 0.3),
-        0 0 90px rgba(69, 183, 209, 0.2);
+        0 0 30px rgba(0, 255, 136, 0.4),
+        0 0 60px rgba(0, 212, 170, 0.3),
+        0 0 90px rgba(0, 168, 204, 0.2);
     animation: imageGlow 2s ease-in-out infinite alternate;
     transition: transform 0.3s ease;
 }
@@ -53,50 +53,50 @@ body {
 @keyframes imageGlow {
     0% {
         box-shadow: 
-            0 0 30px rgba(255, 107, 107, 0.4),
-            0 0 60px rgba(78, 205, 196, 0.3),
-            0 0 90px rgba(69, 183, 209, 0.2);
+            0 0 30px rgba(0, 255, 136, 0.4),
+            0 0 60px rgba(0, 212, 170, 0.3),
+            0 0 90px rgba(0, 168, 204, 0.2);
     }
     100% {
         box-shadow: 
-            0 0 40px rgba(255, 107, 107, 0.6),
-            0 0 80px rgba(78, 205, 196, 0.5),
-            0 0 120px rgba(69, 183, 209, 0.4);
+            0 0 40px rgba(0, 255, 136, 0.6),
+            0 0 80px rgba(0, 212, 170, 0.5),
+            0 0 120px rgba(0, 168, 204, 0.4);
     }
 }
 
 .logo {
     font-size: 4rem;
     font-weight: bold;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background: linear-gradient(45deg, #00ff88, #00d4aa, #00a8cc, #0088cc, #0066aa);
     background-size: 400% 400%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 3s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+    text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
     margin-bottom: 0.5rem;
 }
 
 .subtitle {
     font-size: 1.5rem;
-    color: #4ecdc4;
+    color: #00d4aa;
     margin-bottom: 0.5rem;
-    text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+    text-shadow: 0 0 20px rgba(0, 212, 170, 0.4);
 }
 
 .description {
     font-size: 1rem;
-    color: #96ceb4;
-    opacity: 0.8;
+    color: #00a8cc;
+    opacity: 0.9;
 }
 
 .contract-address {
     cursor: pointer;
     padding: 0.3rem 0.6rem;
     border-radius: 8px;
-    background: rgba(78, 205, 196, 0.1);
-    border: 1px solid rgba(78, 205, 196, 0.3);
+    background: rgba(0, 212, 170, 0.1);
+    border: 1px solid rgba(0, 212, 170, 0.3);
     transition: all 0.3s ease;
     user-select: all;
     font-family: 'Courier New', monospace;
@@ -106,15 +106,15 @@ body {
 }
 
 .contract-address:hover {
-    background: rgba(78, 205, 196, 0.2);
-    border-color: rgba(78, 205, 196, 0.5);
-    box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+    background: rgba(0, 212, 170, 0.2);
+    border-color: rgba(0, 212, 170, 0.5);
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
     transform: scale(1.02);
 }
 
 .contract-address:active {
     transform: scale(0.98);
-    background: rgba(78, 205, 196, 0.3);
+    background: rgba(0, 212, 170, 0.3);
 }
 
 @keyframes slideIn {
@@ -180,38 +180,38 @@ body {
 }
 
 .social-link.twitter {
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background: linear-gradient(45deg, #00ff88, #00d4aa, #00a8cc, #0088cc, #0066aa);
     background-size: 400% 400%;
     color: white;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
     animation: gradientShift 3s ease-in-out infinite;
 }
 
 .social-link.twitter:hover {
     transform: translateY(-2px);
     box-shadow: 
-        0 8px 25px rgba(255, 107, 107, 0.5),
-        0 0 30px rgba(78, 205, 196, 0.4),
-        0 0 50px rgba(69, 183, 209, 0.3);
+        0 8px 25px rgba(0, 255, 136, 0.5),
+        0 0 30px rgba(0, 212, 170, 0.4),
+        0 0 50px rgba(0, 168, 204, 0.3);
     border-color: rgba(255, 255, 255, 0.3);
     animation-duration: 1s;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
 .social-link.telegram {
-    background: linear-gradient(45deg, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff6b6b);
+    background: linear-gradient(45deg, #00a8cc, #0088cc, #0066aa, #00d4aa, #00ff88);
     background-size: 400% 400%;
     color: white;
-    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 168, 204, 0.3);
     animation: gradientShift 3s ease-in-out infinite reverse;
 }
 
 .social-link.telegram:hover {
     transform: translateY(-2px);
     box-shadow: 
-        0 8px 25px rgba(78, 205, 196, 0.5),
-        0 0 30px rgba(69, 183, 209, 0.4),
-        0 0 50px rgba(150, 206, 180, 0.3);
+        0 8px 25px rgba(0, 168, 204, 0.5),
+        0 0 30px rgba(0, 136, 204, 0.4),
+        0 0 50px rgba(0, 102, 170, 0.3);
     border-color: rgba(255, 255, 255, 0.3);
     animation-duration: 1s;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
