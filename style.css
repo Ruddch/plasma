@@ -224,8 +224,7 @@ body {
     box-shadow: 0 4px 15px rgba(254, 202, 87, 0.3);
     animation: gradientShift 3s ease-in-out infinite;
     cursor: pointer;
-    border: none;
-    outline: none;
+    text-decoration: none;
 }
 
 .social-link.alert-bot:hover {
