@@ -154,6 +154,146 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation(); 
         copyContractAddress();
     });
+
+    // Обработчик для кнопки Alert Bot Soon
+    document.getElementById('alert-bot-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        showAlertBotNotification();
+    });
+
+    function showAlertBotNotification() {
+        // Создаем затемненный фон
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            animation: fadeIn 0.3s ease-out;
+        `;
+
+        // Создаем попап
+        const popup = document.createElement('div');
+        popup.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a2a3a 50%, #2d4a3a 100%);
+            color: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                0 0 100px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(0, 212, 170, 0.1);
+            z-index: 10000;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            animation: popupIn 0.4s ease-out forwards;
+           
+            overflow: hidden;
+        `;
+
+        // Добавляем текст
+        popup.innerHTML = `
+            <div style="position: relative; z-index: 2;">
+                <div style="font-size: 2rem; margin-bottom: 20px; color: #00ff88;">🚀</div>
+                <div style="margin-bottom: 30px; line-height: 1.5;">Follow your favorite tokens and buy every dip. Soon on Plasma.</div>
+                <button id="close-popup" style="
+                    background: linear-gradient(45deg, #00ff88, #00d4aa, #00a8cc);
+                    color: white;
+                    border: none;
+                    padding: 12px 30px;
+                    border-radius: 25px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+                ">Got it!</button>
+            </div>
+            <div style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, #feca57, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+                background-size: 400% 400%;
+                opacity: 0.1;
+                animation: gradientShift 3s ease-in-out infinite;
+                z-index: 1;
+            "></div>
+        `;
+
+        // Добавляем стили для анимаций
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes popupIn {
+                from { 
+                    transform: translate(-50%, -50%) scale(0.5);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+            }
+            @keyframes popupOut {
+                from { 
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+                to { 
+                    transform: translate(-50%, -50%) scale(0.5);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Добавляем элементы на страницу
+        document.body.appendChild(overlay);
+        document.body.appendChild(popup);
+
+        // Функция закрытия попапа
+        function closePopup() {
+            popup.style.animation = 'popupOut 0.3s ease-in forwards';
+            overlay.style.animation = 'fadeIn 0.3s ease-in reverse';
+            
+            setTimeout(() => {
+                if (popup.parentNode) popup.parentNode.removeChild(popup);
+                if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                if (style.parentNode) style.parentNode.removeChild(style);
+            }, 300);
+        }
+
+        // Обработчики событий
+        document.getElementById('close-popup').addEventListener('click', closePopup);
+        overlay.addEventListener('click', closePopup);
+
+        // Закрытие по Escape
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                closePopup();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+    }
     
     
     waves.forEach(wave => {

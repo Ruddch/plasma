@@ -217,6 +217,28 @@ body {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
+.social-link.alert-bot {
+    background: linear-gradient(45deg, #feca57, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    background-size: 400% 400%;
+    color: white;
+    box-shadow: 0 4px 15px rgba(254, 202, 87, 0.3);
+    animation: gradientShift 3s ease-in-out infinite;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.social-link.alert-bot:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(254, 202, 87, 0.5),
+        0 0 30px rgba(255, 107, 107, 0.4),
+        0 0 50px rgba(78, 205, 196, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+    animation-duration: 1s;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
 .social-link svg {
     width: 20px;
     height: 20px;
